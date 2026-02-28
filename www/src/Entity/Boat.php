@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\BoatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BoatRepository::class)]
+#[ApiResource]
 class Boat
 {
     #[ORM\Id]
@@ -63,7 +65,7 @@ class Boat
     private Collection $media;
 
     #[ORM\ManyToOne(inversedBy: 'boat')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Rental $rental = null;
 
     /**
