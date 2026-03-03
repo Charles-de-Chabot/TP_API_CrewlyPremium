@@ -33,4 +33,3 @@ security:
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: PUBLIC_ACCESS }
-        - { path: ^/home, roles: IS_AUTHENTICATED_FULLY  }

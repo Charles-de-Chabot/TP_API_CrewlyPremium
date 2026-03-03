@@ -84,6 +84,7 @@ class Boat
      * @var Collection<int, Media>
      */
     #[ORM\OneToMany(targetEntity: Media::class, mappedBy: 'boat')]
+    #[Groups(['boat:read'])]
     private Collection $media;
 
     #[ORM\ManyToOne(inversedBy: 'boat')]

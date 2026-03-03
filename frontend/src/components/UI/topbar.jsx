@@ -1,0 +1,20 @@
+import React from 'react'
+import { useAuthContext } from '../../contexts/AuthContext'
+
+const Topbar = () => {
+    const {nickname} = useAuthContext();
+
+    return (
+        <div className='h-16 flex items-center shadow-md'>
+            <div className="flex-1 text-white text-lg font-semibold ml-2">
+                Bienvenue {user?.email}
+            </div>
+            <div className="">
+                <img src="/images/logo.png" alt="Crewly" />
+            </div>
+            
+        </div>
+    )
+}
+
+export default Topbar
