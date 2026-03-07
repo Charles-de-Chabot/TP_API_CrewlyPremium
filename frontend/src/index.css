@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-slideup: slideup 1s ease-in-out;
+  --animate-fade-in-down: fadeInDown 0.8s ease-out;
+
+  @keyframes slideup {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Utilitaire pour masquer la scrollbar tout en gardant le scroll actif */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}

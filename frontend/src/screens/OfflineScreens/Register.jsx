@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import CustomeInput from '../../components/UI/CustomeInput';
 import ErrorMessage from '../../components/UI/ErrorMessage';
-import ButtonLoader from '../../components/Loader/ButtonLoader';
+import CustomeButton from '../../components/UI/CustomeButton';
 import { useAuthContext } from '../../contexts/authContext';
 import api from '../../api/axios';
 import { URL_USERS, CONFIG_JSON_LD } from '../../constants/apiConstant';
@@ -70,72 +70,73 @@ const Register = () => {
     }
     
     return (
-        <div className='flex flex-col items-center justify-center w-full min-h-[70vh] px-4 sm:px-6 py-8'>
-            <div className="w-full max-w-md animate-slideup2">
-                <div className="text-center mb-8">
-                    <h1 className="title-h1">Créez votre compte</h1>
-                    <p className="text-gray-200 mt-2 text-sm">
-                        Rejoignez la Platforme en quelques secondes...
+        <div className='w-full max-w-2xl animate-slideup'>
+            <div className="bg-slate-900/30 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl shadow-black/50">
+                <div className="text-center mb-4">
+                    <h1 className="text-3xl font-bold text-white tracking-tight mb-2">Rejoignez l'équipage</h1>
+                    <p className="text-slate-400 text-sm font-light">
+                        La plateforme hybride pour les professionnels de la mer
                     </p>
                 </div>
                 <form 
                 onSubmit={handleSubmit} 
-                className="w-full rounded-2xl bg-black/60 backdrop-blur-xs border border-white/10 p-8 sm:p-10 shadow-2xl shadow-black_05">
-                    <div className="space-y-1">
-                        <CustomeInput 
-                        label={"Votre Prénom"}
-                        type={"text"}
-                        placeholder='ex: Eric'
-                        state={firstname}
-                        callable={(event) => setFirstname(event.target.value)}
-                        />
-                        <CustomeInput 
-                        label={"Votre nom de famille"}
-                        type={"text"}
-                        placeholder='ex: Rico'
-                        state={lastname}
-                        callable={(event) => setLastname(event.target.value)}
-                        />
-                        <CustomeInput 
-                        label={"Email"}
-                        type={"email"}
-                        placeholder='votre@email.com'
-                        state={email}
-                        callable={(event) => setEmail(event.target.value)}
-                        />
-                        <CustomeInput 
-                        label={"Mot de passe"}
-                        type={"password"}
-                        placeholder='••••••••'
-                        state={password}
-                        callable={(event) => setPassword(event.target.value)}
-                        />
-                        <CustomeInput 
-                        label={"confirmez votre mot de passe"}
-                        type={"password"}
-                        placeholder='••••••••'
-                        state={confirmPassword}
-                        callable={(event) => setConfirmPassword(event.target.value)}
-                        />
+                className="w-full">
+                    <CustomeInput 
+                    label={"Email"}
+                    type={"email"}
+                    placeholder='votre@email.com'
+                    state={email}
+                    callable={(event) => setEmail(event.target.value)}
+                    />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                        {/* Colonne Gauche : Identité */}
+                        <div>
+                            <CustomeInput 
+                            label={"Votre Prénom"}
+                            type={"text"}
+                            placeholder='ex: Eric'
+                            state={firstname}
+                            callable={(event) => setFirstname(event.target.value)}
+                            />
+                            <CustomeInput 
+                            label={"Votre nom de famille"}
+                            type={"text"}
+                            placeholder='ex: Rico'
+                            state={lastname}
+                            callable={(event) => setLastname(event.target.value)}
+                            />
+                        </div>
+
+                        {/* Colonne Droite : Sécurité */}
+                        <div>
+                            <CustomeInput 
+                            label={"Mot de passe"}
+                            type={"password"}
+                            placeholder='••••••••'
+                            state={password}
+                            callable={(event) => setPassword(event.target.value)}
+                            />
+                            <CustomeInput 
+                            label={"confirmez votre mot de passe"}
+                            type={"password"}
+                            placeholder='••••••••'
+                            state={confirmPassword}
+                            callable={(event) => setConfirmPassword(event.target.value)}
+                            />
+                        </div>
                     </div>
                     {errorMessage && <ErrorMessage message={errorMessage}/>}
 
-                    <div className='mt-8'>
-                        {isLoading ? (
-                            <div className="flex justify-center py-2">
-                                <ButtonLoader/>
-                            </div>
-                        )
-                        : (
-                            <button className='main-button' type="submit">
-                                Créer un compte
-                            </button>
-                        )}
+                    <div className='mt-5'>
+                        <CustomeButton type="submit" isLoading={isLoading}>
+                            Créer un compte
+                        </CustomeButton>
                     </div>
-                    <p className="mt-6 text-center text-gray-300 text-sm">
+                    <p className="mt-4 text-center text-slate-500 text-xs font-medium uppercase tracking-wider">
                         Déja un compte ?{' '}
                         <Link to="/"
-                        className='text-green font-semibold hover:text-green_top underline underline-offset-2 transition-colors'>
+                        className='text-teal-400 hover:text-teal-300 ml-1 transition-colors duration-200 underline decoration-teal-500/30 underline-offset-4'>
                             Connectez-vous
                         </Link>
                     </p>

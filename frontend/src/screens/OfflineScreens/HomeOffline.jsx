@@ -4,13 +4,19 @@ import { IMAGE_URL } from '../../constants/apiConstant'
 
 const HomeOffline = () => {
   return (
-    <div className="flex flex-col w-screen h-screen items-center px-4 bg-black bg-opacity-50 bg-center bg-contain">
-      <div className="w-full md:w-3/4 lg:w-1/2 h-screen flex flex-col justify-center items-center bg-black/80">
-        <div className="w-full flex justify-center items-center py-8 rounded-lg">
-          <img className="h-20 object-contain" src={`${IMAGE_URL}/logo.png`} alt="LogoCrewly" />
+    <div className="flex flex-col w-screen min-h-screen items-center justify-center bg-slate-950 relative overflow-y-auto hide-scrollbar py-10">
+      {/* Fond avec gradients subtiles bleu marine */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-[#0f172a] to-[#020617] z-0"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent z-0"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_var(--tw-gradient-stops))] from-indigo-950/30 via-transparent to-transparent z-0"></div>
+      
+      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center px-4">
+        <div className="w-full flex justify-center items-center mb-8 animate-fade-in-down">
+          <img className="h-16 md:h-20 object-contain drop-shadow-2xl filter brightness-110" src={`${IMAGE_URL}/logo.png`} alt="Crewly" />
         </div>
-        <div className="flex justify-center items-center px-4 w-full rounded-lg"></div>
-        <Outlet/>
+        <div className="w-full flex justify-center">
+          <Outlet/>
+        </div>
       </div>
     </div>
   )
