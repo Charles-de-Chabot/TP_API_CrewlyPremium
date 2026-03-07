@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import CustomeInput from '../../components/UI/CustomeInput';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import ButtonLoader from '../../components/Loader/ButtonLoader';
 import { useAuthContext } from '../../contexts/authContext';
-import axios from 'axios';
-import { API_ROOT } from '../../constants/apiConstant';
+import api from '../../api/axios';
+import { URL_USERS, CONFIG_JSON_LD } from '../../constants/apiConstant';
 
 const Register = () => {
 
@@ -19,14 +19,8 @@ const Register = () => {
 
     const navigate = useNavigate();
     // Utilisation de signIn et userId
-    const { signIn, userId } = useAuthContext();
+    const { signIn } = useAuthContext();
     
-
-    useEffect(() => {
-        if(userId){
-            navigate("/");
-        }
-    }, [userId, navigate])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -45,23 +39,31 @@ const Register = () => {
                 setErrorMessage("Le mots de passe doit contenir au moins 4 caractères");
                 return;
             }else{
-                const response = await axios.post(`${API_ROOT}/register`, {
+                // Utilisation de l'instance api et du endpoint standard API Platform (/api/users)
+                await api.post(URL_USERS, {
                     email,
                     password,
                     firstname,
                     lastname
-                })
-                if(response.data?.success === false){
-                    setErrorMessage(response.data.message);
-                }else{
-                    // Connexion automatique après inscription
-                    await signIn(email, password);
-                    navigate("/");
-                }
+                }, CONFIG_JSON_LD)
+                
+                // Si axios ne lance pas d'erreur, c'est que c'est un succès (201 Created)
+                // Connexion automatique après inscription
+                await signIn(email, password);
+                navigate('/');
             }
         } catch (error) {
-            console.log(`Erreur : ${error}`);
-            setErrorMessage("Erreur lors de l'inscription")
+            console.error(error);
+            
+            let message = "Une erreur est survenue lors de l'inscription.";
+
+            // Gestion améliorée pour récupérer le message exact (ex: Email déjà pris)
+            if (error.response?.data?.violations && error.response.data.violations.length > 0) {
+                message = error.response.data.violations[0].message;
+            } else if (error.response?.data?.['hydra:description'] || error.response?.data?.detail) {
+                message = error.response.data['hydra:description'] || error.response.data.detail;
+            }
+            setErrorMessage(message);
         }finally{
             setIsLoading(false);
         }

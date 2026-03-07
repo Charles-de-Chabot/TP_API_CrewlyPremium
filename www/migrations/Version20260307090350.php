@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20260301095507 extends AbstractMigration
+final class Version20260307090350 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -39,7 +39,7 @@ final class Version20260301095507 extends AbstractMigration
         $this->addSql('CREATE TABLE role (id INT AUTO_INCREMENT NOT NULL, label VARCHAR(50) NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8');
         $this->addSql('CREATE TABLE statistic (id INT AUTO_INCREMENT NOT NULL, label VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, value INT NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8');
         $this->addSql('CREATE TABLE type (id INT AUTO_INCREMENT NOT NULL, label VARCHAR(255) NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8');
-        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, nickname VARCHAR(255) DEFAULT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, phone_number VARCHAR(15) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, is_active TINYINT NOT NULL, position VARCHAR(255) DEFAULT NULL, role_id INT NOT NULL, address_id INT DEFAULT NULL, media_id INT DEFAULT NULL, INDEX IDX_8D93D649D60322AC (role_id), INDEX IDX_8D93D649F5B7AF75 (address_id), INDEX IDX_8D93D649EA9FDD75 (media_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, nickname VARCHAR(255) DEFAULT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, phone_number VARCHAR(15) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, is_active TINYINT NOT NULL, position VARCHAR(255) DEFAULT NULL, role_id INT NOT NULL, address_id INT DEFAULT NULL, media_id INT DEFAULT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), INDEX IDX_8D93D649D60322AC (role_id), INDEX IDX_8D93D649F5B7AF75 (address_id), INDEX IDX_8D93D649EA9FDD75 (media_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8');
         $this->addSql('ALTER TABLE boat ADD CONSTRAINT FK_D86E834AE036D5E3 FOREIGN KEY (boatinfo_id) REFERENCES boat_info (id)');
         $this->addSql('ALTER TABLE boat ADD CONSTRAINT FK_D86E834A3BDC1916 FOREIGN KEY (boat_type_id) REFERENCES type (id)');
         $this->addSql('ALTER TABLE boat ADD CONSTRAINT FK_D86E834AE45950DD FOREIGN KEY (boat_model_id) REFERENCES model (id)');

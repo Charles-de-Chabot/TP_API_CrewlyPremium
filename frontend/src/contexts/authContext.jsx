@@ -4,6 +4,8 @@
 import { createContext, useContext, useState, useEffect } from "react";
 // On importe l'instance api et les helpers de token
 import api, { setAccessToken, clearAccessToken } from "../api/axios";
+import { USER_INFOS } from "../constants/appConstant";
+import { URL_LOGIN } from "../constants/apiConstant";
 
 // ===========================
 // CREATION DU CONTEXTE
@@ -32,7 +34,7 @@ const AuthContextProvider = ({ children }) => {
   const signIn = async (emailInput, passwordInput) => {
     try {
       // 1. Appel API pour récupérer le token
-      const response = await api.post("/api/login_check", {
+      const response = await api.post(URL_LOGIN, {
         email: emailInput, 
         password: passwordInput 
       });
@@ -56,6 +58,8 @@ const AuthContextProvider = ({ children }) => {
         setUserId(user.id);
         setEmail(user.email);
         setFirstname(user.firstname || user.nickname);
+        // Sauvegarde dans le localStorage de l'utilisateur
+        localStorage.setItem(USER_INFOS, JSON.stringify(user));
       } else {
         // Fallback si l'API ne renvoie pas l'objet user complet au login
         // On passe le token explicitement dans les headers pour s'assurer qu'il est pris en compte immédiatement
@@ -67,6 +71,8 @@ const AuthContextProvider = ({ children }) => {
         setUserId(meResponse.data.id);
         setEmail(meResponse.data.email);
         setFirstname(meResponse.data.firstname || meResponse.data.nickname);
+        // Sauvegarde dans le localStorage de l'utilisateur
+        localStorage.setItem(USER_INFOS, JSON.stringify(meResponse.data));
       }
       
     } catch (error) {
@@ -90,6 +96,7 @@ const AuthContextProvider = ({ children }) => {
     // 2. Nettoyage du Token
     clearAccessToken();
     localStorage.removeItem("token");
+    localStorage.removeItem(USER_INFOS);
   };
 
   // ===========================
@@ -98,16 +105,28 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const checkSession = async () => {
       const token = localStorage.getItem("token");
+      const storedUser = localStorage.getItem(USER_INFOS);
+
       if (token) {
+        // 1. Restauration immédiate depuis le localStorage (affichage instantané)
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          setUserId(user.id);
+          setEmail(user.email);
+          setFirstname(user.firstname || user.nickname);
+        }
+
         try {
           // On remet le token dans Axios
           setAccessToken(token);
-          // On récupère les infos fraîches de l'utilisateur
+          // 2. Vérification en arrière-plan avec le serveur
           const response = await api.get("/api/me");
           
           setUserId(response.data.id);
           setEmail(response.data.email);
           setFirstname(response.data.firstname || response.data.nickname);
+          // Mise à jour du localStorage avec les données fraîches
+          localStorage.setItem(USER_INFOS, JSON.stringify(response.data));
         } catch (error) {
           // Si le token est invalide ou expiré
           signOut();

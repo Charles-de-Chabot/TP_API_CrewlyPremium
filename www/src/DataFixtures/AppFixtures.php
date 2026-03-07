@@ -12,6 +12,7 @@ use App\Entity\Role;
 use App\Entity\Type;
 use App\Entity\User;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -67,7 +68,7 @@ class AppFixtures extends Fixture
         $admin->setPassword($this->passwordHasher->hashPassword($admin, 'admin'));
         $admin->setFirstname('admin');
         $admin->setLastname('nomAdmin');
-        $date = new DateTime();
+        $date = new DateTimeImmutable();
         $admin->setCreatedAt($date);
         $admin->setUpdatedAt($date);
         $admin->setIsActive(true);
@@ -92,7 +93,7 @@ class AppFixtures extends Fixture
             $user->setPassword($this->passwordHasher->hashPassword($user, 'user'));
             $user->setFirstname($value['firstname']);
             $user->setLastname($value['lastname']);
-            $date = new DateTime();
+            $date = new DateTimeImmutable();
             $user->setCreatedAt($date);
             $user->setUpdatedAt($date);
             $user->setIsActive(true);
@@ -116,7 +117,7 @@ class AppFixtures extends Fixture
             $capitain->setPassword($this->passwordHasher->hashPassword($capitain, 'capitain'));
             $capitain->setFirstname($value['firstname']);
             $capitain->setLastname($value['lastname']);
-            $date = new DateTime();
+            $date = new DateTimeImmutable();
             $capitain->setCreatedAt($date);
             $capitain->setUpdatedAt($date);
             $capitain->setIsActive(true);
@@ -140,7 +141,7 @@ class AppFixtures extends Fixture
             $hotess->setPassword($this->passwordHasher->hashPassword($hotess, 'hotess'));
             $hotess->setFirstname($value['firstname']);
             $hotess->setLastname($value['lastname']);
-            $date = new DateTime();
+            $date = new DateTimeImmutable();
             $hotess->setCreatedAt($date);
             $hotess->setUpdatedAt($date);
             $hotess->setIsActive(true);
@@ -164,7 +165,7 @@ class AppFixtures extends Fixture
             $chef->setPassword($this->passwordHasher->hashPassword($chef, 'chef'));
             $chef->setFirstname($value['firstname']);
             $chef->setLastname($value['lastname']);
-            $date = new DateTime();
+            $date = new DateTimeImmutable();
             $chef->setCreatedAt($date);
             $chef->setUpdatedAt($date);
             $chef->setIsActive(true);
