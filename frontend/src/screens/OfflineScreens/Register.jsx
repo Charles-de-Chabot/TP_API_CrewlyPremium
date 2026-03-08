@@ -75,7 +75,7 @@ const Register = () => {
                 <div className="text-center mb-4">
                     <h1 className="text-3xl font-bold text-white tracking-tight mb-2">Rejoignez l'équipage</h1>
                     <p className="text-slate-400 text-sm font-light">
-                        La plateforme hybride pour les professionnels de la mer
+                        Vos plus beaux voyages vous attendent
                     </p>
                 </div>
                 <form 
@@ -102,7 +102,7 @@ const Register = () => {
                             <CustomeInput 
                             label={"Votre nom de famille"}
                             type={"text"}
-                            placeholder='ex: Rico'
+                            placeholder='ex: Tabarly'
                             state={lastname}
                             callable={(event) => setLastname(event.target.value)}
                             />

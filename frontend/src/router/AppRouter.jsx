@@ -1,32 +1,64 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuthContext } from '../contexts/authContext';
+import PageLoader from '../components/Loader/PageLoader';
 
-//=====================
-//ROUTER PRINCIPALE DE L'APPLICATION
-//=====================
-//ce router determine quel route afficher selno l'état de connexion 
-//utilisateur connecté -> OnlineRouter (application complète)
-//utilisateur deco -> OfflineRouteur (login/register)
+// Layouts
+import App from '../App';
+import HomeOffline from '../screens/OfflineScreens/HomeOffline';
 
-
-import React from 'react'
-import { RouterProvider } from 'react-router-dom'
-import OfflineRouter from './OfflineRouter'
-import { useAuthContext } from '../contexts/authContext'
-import PageLoader from '../components/Loader/PageLoader'
-import OnlineRouter from './OnlineRouter'
-
+// Ecrans
+import Home from '../screens/OnlineScreens/Home';
+import Login from '../screens/OfflineScreens/Login';
+import Register from '../screens/OfflineScreens/Register';
 
 const AppRouter = () => {
-    // On récupère l'utilisateur et l'état de chargement depuis le contexte d'authentification
     const { userId, loading } = useAuthContext();
 
-    // Affiche un loader pendant que le contexte vérifie la session utilisateur
     if (loading) {
-        return <PageLoader/>;
+        return <PageLoader />;
     }
-    
+
     return (
-        <RouterProvider router={userId ? OnlineRouter : OfflineRouter}/>
-    )
-}
+        <BrowserRouter>
+            <Routes>
+                {/* 
+                    GROUPE 1 : Routes Publiques 
+                    Accessibles à tous (connecté ou non).
+                    Utilise le layout 'App' qui contient la Topbar et le Footer.
+                */}
+                <Route element={<App />}>
+                    <Route path="/" element={<Home />} />
+                    {/* On pourra ajouter ici la page /boats plus tard */}
+                    <Route path="/boats" element={<div className="text-white pt-20 text-center">Page La Flotte (à venir)</div>} />
+                </Route>
+
+                {/* 
+                    GROUPE 2 : Routes "Invité" (Login / Register)
+                    Accessibles UNIQUEMENT si l'utilisateur n'est PAS connecté (!userId).
+                    Sinon, on redirige vers l'accueil (<Navigate to="/" />).
+                    Utilise le layout 'HomeOffline' (centré, sans topbar complète).
+                */}
+                <Route element={!userId ? <HomeOffline /> : <Navigate to="/" replace />}>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                </Route>
+
+                {/* 
+                    GROUPE 3 : Routes Protégées
+                    Accessibles UNIQUEMENT si l'utilisateur EST connecté (userId).
+                    Sinon, on redirige vers le login (<Navigate to="/login" />).
+                    Utilise le layout 'App' pour garder la cohérence visuelle.
+                */}
+                <Route element={userId ? <App /> : <Navigate to="/login" replace />}>
+                    <Route path="/profile" element={<div className="text-white pt-20 text-center">Page Profil (à venir)</div>} />
+                </Route>
+
+                {/* Route 404 : Redirection vers l'accueil pour toute URL inconnue */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+        </BrowserRouter>
+    );
+};
 
 export default AppRouter

@@ -44,7 +44,7 @@ const Login = () => {
                 <div className="text-center mb-6">
                     <h1 className="text-3xl font-bold text-white tracking-tight mb-2">Bon retour à bord</h1>
                     <p className="text-slate-400 text-sm font-light">
-                        Gérez votre flotte et vos régates en toute simplicité
+                        Accédez a notre flotte et a votre espace personnelle.
                     </p>
                 </div>
                 <form 

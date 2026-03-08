@@ -1,5 +1,6 @@
 import React from 'react'
 import Topbar from './components/UI/topbar'
+import Footer from './components/UI/footer'
 import { Outlet } from 'react-router-dom'
 
 const App = () => {
@@ -9,9 +10,13 @@ const App = () => {
         {/*  topbar: barre suppérieur */}
         <Topbar/>
 
+        
         <div className="h-[calc(100vh-64px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
           <div className="flex-1 h-fit pb-4 text-white">
             <Outlet/>
+            
+        {/*  footer: barre inférieur */}
+        <Footer />
           </div>
         </div>
       </div>
