@@ -22,11 +22,11 @@ class Type
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['type:read'])]
+    #[Groups(['type:read', 'boat:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['type:read', 'type:write'])]
+    #[Groups(['type:read', 'type:write', 'boat:read'])]
     private ?string $label = null;
 
     /**

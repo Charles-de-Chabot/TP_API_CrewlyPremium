@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity(repositoryClass: BoatRepository::class)]
 #[ApiResource(
@@ -66,18 +67,25 @@ class Boat
 
     #[ORM\ManyToOne(inversedBy: 'boats')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['boat:read'])]
     private ?BoatInfo $boatinfo = null;
 
     #[ORM\ManyToOne(inversedBy: 'boats')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['boat:read'])]
+    #[SerializedName('type')]
     private ?Type $boatType = null;
 
     #[ORM\ManyToOne(inversedBy: 'boats')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['boat:read'])]
+    #[SerializedName('model')]
     private ?Model $boatModel = null;
 
     #[ORM\ManyToOne(inversedBy: 'boats')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['boat:read'])]
+    #[SerializedName('adress')]
     private ?Address $address = null;
 
     /**
@@ -319,5 +327,13 @@ class Boat
         }
 
         return $this;
+    }
+
+    // Raccourci pour exposer directement la capacité du bateau à la racine du JSON
+    #[Groups(['boat:read'])]
+    #[SerializedName('maxUser')]
+    public function getMaxUser(): ?int
+    {
+        return $this->boatinfo?->getMaxUser();
     }
 }

@@ -19,11 +19,11 @@ class BoatInfo
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['boatinfo:read'])]
+    #[Groups(['boatinfo:read', 'boat:read'])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(['boatinfo:read', 'boatinfo:write'])]
+    #[Groups(['boatinfo:read', 'boatinfo:write', 'boat:read'])]
     private ?int $maxUser = null;
 
     #[ORM\Column]

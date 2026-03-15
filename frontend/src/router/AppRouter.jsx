@@ -9,6 +9,7 @@ import HomeOffline from '../screens/OfflineScreens/HomeOffline';
 
 // Ecrans
 import Home from '../screens/OnlineScreens/Home';
+import Boats from '../screens/OnlineScreens/Boats';
 import Login from '../screens/OfflineScreens/Login';
 import Register from '../screens/OfflineScreens/Register';
 
@@ -29,8 +30,7 @@ const AppRouter = () => {
                 */}
                 <Route element={<App />}>
                     <Route path="/" element={<Home />} />
-                    {/* On pourra ajouter ici la page /boats plus tard */}
-                    <Route path="/boats" element={<div className="text-white pt-20 text-center">Page La Flotte (à venir)</div>} />
+                    <Route path="/boats" element={<Boats />} />
                 </Route>
 
                 {/* 

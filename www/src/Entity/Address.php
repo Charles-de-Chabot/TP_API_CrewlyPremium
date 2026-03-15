@@ -26,7 +26,7 @@ class Address
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['address:read'])]
+    #[Groups(['address:read', 'boat:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50, nullable: true)]
@@ -42,7 +42,7 @@ class Address
     private ?string $postcode = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['address:read', 'address:write'])]
+    #[Groups(['address:read', 'address:write', 'boat:read'])]
     private ?string $city = null;
 
     /**

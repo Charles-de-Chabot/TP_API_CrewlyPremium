@@ -22,11 +22,11 @@ class Model
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['model:read'])]
+    #[Groups(['model:read', 'boat:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['model:read', 'model:write'])]
+    #[Groups(['model:read', 'model:write', 'boat:read'])]
     private ?string $label = null;
 
     /**
